@@ -8,12 +8,19 @@ class RestfulAPI {
 
     protected $params = array();
 
-    protected $file = null;
+    protected $responseData = null;
 
     public function __construct(){
-        echo "Init RestfulAPI";
+        echo "Init RestfulAPI <br>";
         $this->_input();
-        $this->_process_api();
+
+        if(!$this->_validateRequest()){
+            $this->responseData = APIResponse::getResponse("403");
+        }
+        else {
+            $this->responseData = $this->_process_api();
+            echo $this->responseData;
+        }
     }
 
     private function _input(){
@@ -53,7 +60,6 @@ class RestfulAPI {
             break;
         }
 
-        print_r("<br>");
         print_r($this->params);
     }
 
@@ -64,44 +70,24 @@ class RestfulAPI {
 
             $class = $controllerMap[$keyMap]['class'];
             $functionName = $controllerMap[$keyMap]['function_name'];
-            // $returnArray = AppResponse::getResponse('200');
-            var_dump($functionName);
-
-            $cObjectClass = new $class();
-            var_dump($cObjectClass->create());
-            $returnArray = $cObjectClass->$functionName($this->params);
-            var_dump($returnArray);
+            
+            $object = new $class();
+            // var_dump(gettype(($object)));
+            $returnArray = $object->$functionName($this->params);
+            // var_dump($returnArray);
         } else {
-            $returnArray = AppResponse::getResponse('405');
+            $returnArray = APIResponse::getResponse('405');
         }
-        $this->response($returnArray);
-        var_dump($returnArray);
         return $returnArray;
     }
 
-    /**
-     * Trả dữ liệu về client
-     * @param: $status_code: mã http trả về
-     * @param: $data: dữ liệu trả về
-     */
-    protected function response($data = NULL){
-        header("Content-Type: application/json");
-        echo json_encode($data);
-        die();
+    private function _validateRequest(){
+        return true;
     }
 
-    /**
-     * Tạo chuỗi http header
-     * @param: $status_code: mã http
-     * @return: Chuỗi http header, ví dụ: HTTP/1.1 404 Not Found
-     */
-    private function _build_http_header_string($status_code){
-        $status = array(
-            200 => 'OK',
-            404 => 'Not Found',
-            405 => 'Method Not Allowed',
-            500 => 'Internal Server Error'
-        );
-        return "HTTP/1.1 " . $status_code . " " . $status[$status_code];
+    public function response(){
+        header("Content-Type: application/json");
+        echo json_encode($this->responseData, JSON_PRETTY_PRINT);
+        die();
     }
 }

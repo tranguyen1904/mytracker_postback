@@ -2,11 +2,16 @@
 
 $mapping = [
 
-    'AppResponse' => './AppResponse.php',
-    'DataAccess' => './DataAccess.php',
+    'APIResponse' => './APIResponse.php',
     'RestfulAPI' => './RestfulAPI.php',
-    'PostbackController' => './PostbackController.php',
-    'APIContext' => './APIContext.php',
+
+    'BaseController' => './controller/BaseController.php',
+    'PostbackController' => './controller/PostbackController.php',
+
+    'APIContext' => './dbaccess/APIContext.php',
+    'DBConnection' => './dbaccess/DBConnection.php',
+
+
     'ApiConfig' => './config/ApiConfig.php',
 ];
 

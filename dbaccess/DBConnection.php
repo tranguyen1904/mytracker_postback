@@ -6,7 +6,7 @@ class DBConnection
 {
 
     public function __construct(array $config){
-//        $this->pdo = null;
+        echo "<br> DBConnection";
         $this->dsn = $this->getDsn($config);
         $this->userName = $this->getUserName($config);
         $this->password = $this->getPassword($config);
@@ -18,7 +18,6 @@ class DBConnection
             }
             return $this->pdo;
         } catch (Exception $e) {
-//            Log::error($e);
             echo $e;
         }
         return null;

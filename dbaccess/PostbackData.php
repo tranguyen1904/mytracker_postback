@@ -4,6 +4,7 @@
 class PostbackData
 {
     public $ID;
+    public $deviceID;
     public $IFA;
     public $IP; //mt_install_ip
     public $CountryCode; //mt_install_country_code

@@ -1,9 +1,9 @@
 <?php
 
-class AppResponse
+class APIResponse
 {
     public static function getResponse($varRespCode, $detail='') {
-
+        echo "<br>Api response ".$varRespCode;
         $message = '';
         $success = FALSE;
         $response= '';
@@ -74,10 +74,9 @@ class AppResponse
         // return array for when the API needs to return the passed params
         $returnArray = array('success' => $success, 'response' => $response, 'message' => $message);
         if($detail !== ''){
-            $returnArray['detail'] = $detail;
+            $returnArray['message'] = $detail;
         }
         return $returnArray;
-
     }
 
 }
