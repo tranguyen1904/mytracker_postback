@@ -31,4 +31,23 @@ class ApiConfig
 
     const urlPrefix = "postback.php";
 
+    // -------------------------------------------------
+
+    const listDB = [
+        "db1" => [
+            "host"=> "localhost",
+            "port"=> "3307",
+            "username"=> "root",
+            "password"=> "root",
+            "database"=> "khanhtn2",
+        ],
+        "db2" => [
+            "host"=> '10.11.165.10',
+            "port"=> "3306",
+            "username"=> "khanhtn2",
+            "password"=> "vqODpGFl2qgv",
+            "database"=> "khanhtn2",
+        ]
+    ];
+
 }
