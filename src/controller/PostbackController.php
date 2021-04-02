@@ -25,10 +25,7 @@ class PostbackController extends BaseController
             return APIResponse::getResponse('400');
         }
 
-        $listItem = "`".implode("`,`", array_keys($postbackData))."`";
-        $listValue = "'".implode("','", array_values($postbackData))."'";
-        $sql = "insert into ".$this->tableName."(".$listItem.") values (".$listValue.")";
-        $query = $this->__context->querySQL($sql);
+        $query = $this->__context->insert($postbackData, $this->tableName);
         
         if(!$query){
             $res = APIResponse::getResponse('500', "Writing database error");
