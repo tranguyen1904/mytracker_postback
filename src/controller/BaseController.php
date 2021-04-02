@@ -1,6 +1,5 @@
 <?php
-
-namespace API\controller;
+// namespace API\controller;
 
 class BaseController {
 

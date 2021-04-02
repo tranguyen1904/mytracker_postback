@@ -1,9 +1,9 @@
 <?php
-namespace API\controller;
+// namespace API\controller;
 
-use API\dbaccess\APIContext;
-use API\config\ApiConfig;
-use API\APIResponse;
+// use API\dbaccess\APIContext;
+// use API\config\ApiConfig;
+// use API\APIResponse;
 
 class PostbackController extends BaseController
 {
@@ -29,6 +29,7 @@ class PostbackController extends BaseController
         $listValue = "'".implode("','", array_values($postbackData))."'";
         $sql = "insert into ".$this->tableName."(".$listItem.") values (".$listValue.")";
         $query = $this->__context->querySQL($sql);
+        
         if(!$query){
             $res = APIResponse::getResponse('500', "Writing database error");
         }else {

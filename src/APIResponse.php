@@ -1,5 +1,5 @@
 <?php
-namespace API;
+// namespace API;
 
 class APIResponse
 {
@@ -71,7 +71,7 @@ class APIResponse
 
         }
 
-        $returnArray = array('success' => $success, 'response' => $response, 'message' => $message);
+        $returnArray = array('success' => $success, 'statusCode' => $response, 'message' => $message);
         if($detail !== ''){
             $returnArray['message'] = $detail;
         }

@@ -1,5 +1,5 @@
 <?php
-namespace API\config;
+// namespace API\config;
 
 class ApiConfig
 {

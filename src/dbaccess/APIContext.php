@@ -1,7 +1,7 @@
 <?php
-namespace API\dbaccess;
+// namespace API\dbaccess;
 
-use API\config\ApiConfig;
+// use API\config\ApiConfig;
 
 class APIContext {
     public function __construct($controller='')

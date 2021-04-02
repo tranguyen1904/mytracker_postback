@@ -1,5 +1,5 @@
 <?php
-namespace API\dbaccess;
+// namespace API\dbaccess;
 
 use PDO, Exception;
 
@@ -7,7 +7,6 @@ class DBConnection
 {
 
     public function __construct(array $config){
-        echo "<br> DBConnection";
         $this->dsn = $this->getDsn($config);
         $this->userName = $this->getUserName($config);
         $this->password = $this->getPassword($config);
