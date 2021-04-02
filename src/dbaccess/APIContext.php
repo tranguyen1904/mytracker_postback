@@ -1,11 +1,12 @@
 <?php
+namespace API\dbaccess;
 
+use API\config\ApiConfig;
 
 class APIContext {
-    public function __construct()
+    public function __construct($controller='')
     {
         $this->db = new DBConnection(ApiConfig::DBConfig);
-        // echo "<br>APIContext<br>";
     }
 
     public function querySQL($sql){

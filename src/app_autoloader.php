@@ -15,7 +15,6 @@ $mapping = [
     'ApiConfig' => './config/ApiConfig.php',
 ];
 
-//----------------------------------------------------------------------------------------------------------------------
 spl_autoload_register(function ($class) use ($mapping) {
     if (isset($mapping[$class])) {
         require_once $mapping[$class];

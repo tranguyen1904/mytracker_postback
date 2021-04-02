@@ -1,4 +1,6 @@
 <?php
+namespace API;
+use API\config\ApiConfig;
 
 class RestfulAPI {
 
@@ -19,7 +21,6 @@ class RestfulAPI {
         }
         else {
             $this->responseData = $this->_process_api();
-            echo $this->responseData;
         }
     }
 
@@ -28,11 +29,12 @@ class RestfulAPI {
         header("Access-Control-Allow-Orgin: *");
         header("Access-Control-Allow-Methods: *");
 
-        $this->params   = explode('/', trim($_SERVER['PATH_INFO'],'/'));
-        if(count($this->params) > 0 && $this->params[0]=='postback.php'){
-            array_shift($this->params);
-        }   
-        $this->endpoint = array_shift($this->params);
+        $path = $this->getPathInfo();
+        print_r($path);
+        $path = trim($path, '/');
+        print_r($path);
+
+        $this->endpoint = $path;
         $method         = $_SERVER['REQUEST_METHOD'];
         $allow_method   = array('GET', 'POST', 'PUT', 'DELETE');
 
@@ -59,26 +61,17 @@ class RestfulAPI {
                 $this->response(500, "Invalid Method");
             break;
         }
-
-        print_r($this->params);
     }
 
     private function _process_api(){
-        $controllerMap = ApiConfig::controllerMap;        
-        $keyMap = $this->method."|".$this->endpoint;
-        if (isset($controllerMap[$keyMap])) {
-
-            $class = $controllerMap[$keyMap]['class'];
-            $functionName = $controllerMap[$keyMap]['function_name'];
-            
-            $object = new $class();
-            // var_dump(gettype(($object)));
-            $returnArray = $object->$functionName($this->params);
-            // var_dump($returnArray);
+        $controllerMapping = ApiConfig::controllerMap;
+        if (isset($controllerMapping[$this->endpoint])){
+            $controller = new $controllerMapping[$this->endpoint]();
+            $method = self::methodMapping[$this->method];
+            return $controller->$method($this->params);
         } else {
-            $returnArray = APIResponse::getResponse('405');
+            return APIResponse::getResponse('405');
         }
-        return $returnArray;
     }
 
     private function _validateRequest(){
@@ -90,4 +83,20 @@ class RestfulAPI {
         echo json_encode($this->responseData, JSON_PRETTY_PRINT);
         die();
     }
+
+    private function getPathInfo(){
+        if (array_key_exists('PATH_INFO', $_SERVER) === true)
+            return $_SERVER['PATH_INFO'];
+        
+        $path = substr($_SERVER['PHP_SELF'], strpos($_SERVER['PHP_SELF'], '.php') + strlen(4));
+        $path = trim($path, '/');
+        return trim($path, '/');
+    }
+
+    const methodMapping = [
+        "POST" => "create",
+        "GET" => "get",
+        "PUT" => 'update',
+        "DELETE" => 'delete'
+    ];
 }

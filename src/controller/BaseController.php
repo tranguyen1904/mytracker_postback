@@ -1,12 +1,26 @@
 <?php
 
+namespace API\controller;
+
 class BaseController {
 
     public function __construct(){
 
     }
 
-    public function create($param){
+    public function create($arg){
+        return null;
+    }
+
+    public function get($arg){
+        return null;
+    }
+
+    public function update($arg){
+        return null;
+    } 
+
+    public function delete($arg){
         return null;
     }
 

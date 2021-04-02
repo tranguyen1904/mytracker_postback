@@ -1,33 +1,33 @@
 <?php
+namespace API\controller;
+
+use API\dbaccess\APIContext;
+use API\config\ApiConfig;
+use API\APIResponse;
 
 class PostbackController extends BaseController
 {
     public function __construct(){
-        $this->__context = new APIContext();
+        $this->__context = new APIContext('PostbackController');
         $this->fields = ApiConfig::postbackFields;
         $this->tableName = "postback";
-        echo "<br>PostbackController<br>";
     }
 
     public function create($param){
-        echo "<br>PostbackController create<br>";
-
         $postbackData = [];
         foreach ($param as $key=>$value){
-            if(in_array($key, $this->fields)){
+            if(isset($this->fields[$key])){
                 $postbackData[$key] = $value;
             }
         }
 
         if (!$this->validateData($postbackData)){
-            echo "<br>PostbackController validateData<br>";
             return APIResponse::getResponse('400');
         }
 
         $listItem = "`".implode("`,`", array_keys($postbackData))."`";
         $listValue = "'".implode("','", array_values($postbackData))."'";
         $sql = "insert into ".$this->tableName."(".$listItem.") values (".$listValue.")";
-        echo "<br>".$sql;
         $query = $this->__context->querySQL($sql);
         if(!$query){
             $res = APIResponse::getResponse('500', "Writing database error");
@@ -35,6 +35,10 @@ class PostbackController extends BaseController
             $res = APIResponse::getResponse('200');
         }
         return $res;
+    }
+
+    public function get($param){
+        return $this->create($param);
     }
 
     public function validateData($data)

@@ -1,6 +1,7 @@
 <?php
+namespace API\dbaccess;
 
-use PDO;
+use PDO, Exception;
 
 class DBConnection
 {

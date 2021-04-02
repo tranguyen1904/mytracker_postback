@@ -1,9 +1,9 @@
 <?php
+namespace API;
 
 class APIResponse
 {
     public static function getResponse($varRespCode, $detail='') {
-        echo "<br>Api response ".$varRespCode;
         $message = '';
         $success = FALSE;
         $response= '';
@@ -69,9 +69,8 @@ class APIResponse
                 $response = '000';
                 $message = 'Unknown application response request.';
 
-        } // end switch
+        }
 
-        // return array for when the API needs to return the passed params
         $returnArray = array('success' => $success, 'response' => $response, 'message' => $message);
         if($detail !== ''){
             $returnArray['message'] = $detail;
