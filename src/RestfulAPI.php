@@ -1,6 +1,7 @@
 <?php
-// namespace API;
-// use API\config\ApiConfig;
+namespace PostbackAPI;
+use PostbackAPI\config\ApiConfig;
+use PostbackAPI\controller\PostbackController;
 
 class RestfulAPI {
 
@@ -13,6 +14,7 @@ class RestfulAPI {
     protected $responseData = null;
 
     public function __construct(){
+        echo "RestfulAPI contructor";
         $this->_input();
 
         if(!$this->_validateRequest()){
@@ -24,16 +26,11 @@ class RestfulAPI {
     }
 
     private function _input(){
-
+        echo nl2br("RestfulAPI input\n");
         header("Access-Control-Allow-Orgin: *");
         header("Access-Control-Allow-Methods: *");
 
-        $path = $this->getPathInfo();
-        // print_r($path);
-        $path = trim($path, '/');
-        // print_r($path);
-
-        $this->endpoint = $path;
+        $this->endpoint = $this->getPathInfo();
         $method         = $_SERVER['REQUEST_METHOD'];
         $allow_method   = array('GET', 'POST', 'PUT', 'DELETE');
 
@@ -63,8 +60,11 @@ class RestfulAPI {
     }
 
     private function _process_api(){
+        echo nl2br("RestfulAPI Process\n");
         $controllerMapping = ApiConfig::controllerMap;
         if (isset($controllerMapping[$this->endpoint])){
+            echo nl2br($controllerMapping[$this->endpoint]."\n");
+            
             $controller = new $controllerMapping[$this->endpoint]();
             $method = self::methodMapping[$this->method];
             return $controller->$method($this->params);
@@ -74,6 +74,7 @@ class RestfulAPI {
     }
 
     private function _validateRequest(){
+        echo nl2br("RestfulAPI validate Request\n");
         return true;
     }
 
@@ -87,10 +88,9 @@ class RestfulAPI {
 
     private function getPathInfo(){
         if (array_key_exists('PATH_INFO', $_SERVER) === true)
-            return $_SERVER['PATH_INFO'];
-        
-        $path = substr($_SERVER['PHP_SELF'], strpos($_SERVER['PHP_SELF'], '.php') + strlen(4));
-        $path = trim($path, '/');
+            $path = $_SERVER['PATH_INFO'];
+        else
+            $path = substr($_SERVER['PHP_SELF'], strpos($_SERVER['PHP_SELF'], '.php') + strlen(4));
         return trim($path, '/');
     }
 

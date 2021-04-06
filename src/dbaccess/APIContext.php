@@ -1,7 +1,7 @@
 <?php
-// namespace API\dbaccess;
+namespace PostbackAPI\dbaccess;
 
-// use API\config\ApiConfig;
+use PostbackAPI\config\ApiConfig;
 
 class APIContext {
 

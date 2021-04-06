@@ -1,5 +1,5 @@
 <?php
-// namespace API\dbaccess;
+namespace PostbackAPI\dbaccess;
 
 use PDO, Exception;
 

@@ -1,5 +1,5 @@
 <?php
-// namespace API;
+namespace PostbackAPI;
 
 class APIResponse
 {

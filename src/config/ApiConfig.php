@@ -1,5 +1,5 @@
 <?php
-// namespace API\config;
+namespace PostbackAPI\config;
 
 class ApiConfig
 {
@@ -25,8 +25,8 @@ class ApiConfig
     ];
 
     const controllerMap = [
-        "postback"=>"PostbackController",
-        "mytracker/postback"=>"PostbackController"
+        "postback"=>"PostbackAPI\controller\PostbackController",
+        "mytracker/postback"=>"PostbackAPI\controller\PostbackController",
     ];
 
     const urlPrefix = "postback.php";

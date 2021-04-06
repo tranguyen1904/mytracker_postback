@@ -1,6 +1,8 @@
 <?php
-// namespace API;
+echo "a";
 
+// require __DIR__ . '/vendor/autoload.php';
 require_once ('./app_autoloader.php');
-$cApiHandler = new RestfulAPI();
+echo "a";
+$cApiHandler = new PostbackAPI\RestfulAPI();
 $cApiHandler->response();

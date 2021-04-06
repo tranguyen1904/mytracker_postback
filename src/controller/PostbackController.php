@@ -1,13 +1,16 @@
 <?php
-// namespace API\controller;
+namespace PostbackAPI\controller;
 
-// use API\dbaccess\APIContext;
-// use API\config\ApiConfig;
-// use API\APIResponse;
+use PostbackAPI\dbaccess\APIContext;
+use PostbackAPI\config\ApiConfig;
+use PostbackAPI\APIResponse;
+
 
 class PostbackController extends BaseController
 {
     public function __construct(){
+        echo nl2br("PostbackController contructor\n");
+
         $this->__context = new APIContext('PostbackController');
         $this->fields = ApiConfig::postbackFields;
         $this->tableName = "postback";
